@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PawPathRole – Pet Adoption</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Raleway:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>:root{--blue:#2563eb;--yellow:#fbc61a;--ink:#111;--bg:#eef0f6}
+*{box-sizing:border-box}body{margin:0;font-family:Raleway,sans-serif;color:var(--ink);background:var(--yellow)}
+h1,h2,.btn,.brand{font-family:Bangers,cursive;letter-spacing:.04em;font-weight:400}
+.nav{position:absolute;top:20px;left:0;right:0;width:calc(100% - 24px);z-index:10;margin:0 auto;max-width:1000px;background:var(--blue);border-radius:14px;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:4px 4px 0 #000}
+.brand{color:var(--yellow);font-size:1.6rem;text-decoration:none;display:flex;flex-direction:column;line-height:1}.brand small{font:700 .55rem Raleway;color:#fff}
+.links{display:flex;gap:8px;align-items:center}.links>a{background:#fff;color:#000;padding:4px 12px;border-radius:8px;text-decoration:none;font-size:.85rem;border:2px solid #000}
+.acct{position:relative}.acct summary{list-style:none;cursor:pointer;background:#fff;border-radius:50%;width:34px;height:34px;display:grid;place-items:center}
+.acct div{position:absolute;right:0;top:42px;background:var(--blue);padding:6px;border-radius:8px;display:grid;gap:4px;min-width:140px}
+.acct a,.acct span{background:#fff;padding:4px 8px;border-radius:4px;text-align:center;color:#000;text-decoration:none;font-size:.8rem}
+.hero h1{margin:0;display:flex;flex-wrap:wrap;gap:0 14px;align-items:center;font-size:clamp(3.5rem,11vw,7rem);line-height:.95}
+.role{background:var(--yellow);color:#000;padding:0 18px;border:4px solid var(--blue);border-radius:14px;transform:rotate(-4deg);box-shadow:6px 6px 0 var(--blue)}
+.tag{font-size:.8rem;margin:.2rem 0}.t2{margin-left:25%}.t3{margin-left:45%}
+.intro{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-top:24px}.intro .card{flex:1 1 240px;font-size:1rem}
+.card{background:#fff;border-radius:22px;padding:25px;box-shadow:5px 6px 0 #000}
+.card h2{margin:0 0 6px;font-size:1.7rem}
+.btn{display:inline-block;background:var(--blue);color:#fff;border:0;border-radius:8px;padding:8px 18px;font-size:1.1rem;text-decoration:none;box-shadow:3px 3px 0 #000;cursor:pointer}.btn.big{font-size:1.8rem;padding:10px 24px}
+.yellow{padding:30px 6vw;background:var(--yellow)}.narrow{max-width:860px;margin:auto;display:grid;gap:22px}
+.pet{display:grid;grid-template-columns:1fr 1.2fr;gap:22px;margin:0 auto 28px;max-width:960px;align-items:center}.pet.flip img{order:2}
+.pet img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;box-shadow:6px 6px 0 #000;background:#444}
+.pet .card{text-align:justify}.pet .btn{display:block;margin:10px auto 0;width:max-content}
+.ctr{text-align:center;font-size:1.8rem;margin:0 0 14px}.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;max-width:960px;margin:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:960px;margin:auto}.two h2{text-align:center;font-size:1.8rem;margin:0}
+form.card{display:grid;gap:12px}input,textarea{padding:10px;border:2px solid #000;border-radius:8px;font:inherit;width:100%}
+.err{color:#b00020;font-weight:700}footer{text-align:center;padding:20px;background:#000;color:#fff;font-size:.8rem}
+@media(max-width:700px){.pet,.two{grid-template-columns:1fr}.pet.flip img{order:0}.t2,.t3{margin-left:0}.links>a{display:none}}
+/* carousels */
+.car{position:relative;max-width:960px;margin:0 auto}.track{display:flex;justify-content:center;gap:14px;align-items:stretch}
+.slide{display:none;flex:0 0 32%;min-width:0}.slide.is-prev,.slide.is-active,.slide.is-next{display:flex;flex-direction:column}
+.slide:not(.is-active){opacity:.45;pointer-events:none;filter:saturate(.6)}
+.stories .slide,#stories .slide{background:#fff;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #000;border:3px solid #000}
+#stories .slide img{width:100%;aspect-ratio:1;object-fit:cover;background:#444}.foot{padding:10px;text-align:center}
+.arrow{position:absolute;top:35%;z-index:3;width:56px;height:56px;border:0;background:none;cursor:pointer;padding:0}
+.arrow svg{width:100%;height:100%;fill:none;stroke:var(--blue);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(2px 2px 0 #000)}
+.arrow.l{left:4%}.arrow.r{right:4%}.arrow:focus-visible,.btn:focus-visible,.close:focus-visible{outline:3px solid #000;outline-offset:3px}
+.fbtitle{font-size:clamp(2.5rem,7vw,4rem);text-align:center;color:#fff;-webkit-text-stroke:2px #000;paint-order:stroke fill;text-shadow:4px 4px 0 #000;margin:20px auto 6px;border-bottom:2px solid #000;width:max-content;padding:0 10px}
+.fb .slide{padding:14px 18px;min-height:190px}.who{display:flex;align-items:center;gap:8px;font-size:.9rem}.who img{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#555}
+.ago{font-size:.8rem;margin-top:6px}.stars{color:var(--yellow);font-size:1.6rem;-webkit-text-stroke:1px #000;letter-spacing:2px}.fb p{font-size:.8rem;text-align:center}
+.more{font:700 .8rem Raleway;color:var(--blue)}.ctr .btn.big{margin-top:24px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(251,198,26,.92);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}.modal[hidden]{display:none}
+.modal .arrow{top:45%}.modal .arrow.l{left:1%}.modal .arrow.r{right:1%}
+.mbox{position:relative;background:#fff;border-radius:22px;box-shadow:8px 8px 0 #000;max-width:780px;max-height:90vh;overflow:auto;padding:16px;display:grid;grid-template-columns:260px 1fr;gap:16px}
+.mbox>img{width:100%;border-radius:12px;border:2px solid #000;object-fit:cover;aspect-ratio:3/4;background:#444}
+.mbox h3{font:1.9rem Bangers;letter-spacing:.04em;margin:0 0 8px;-webkit-text-stroke:1px #000}.mbox p{font-size:.85rem;text-align:justify;margin:0 0 14px}
+.close{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:0;background:var(--blue);color:#fff;cursor:pointer}
+/* footer */
+footer{background:var(--blue);color:#fff;text-align:left;padding:24px 6vw;font-size:.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
+footer h4{font:1.2rem Bangers;letter-spacing:.04em;margin:0 0 6px}footer a{color:#fff;display:block;text-decoration:none;margin:2px 0}footer a:hover{text-decoration:underline}
+.soc{display:flex;gap:8px;margin-top:8px}.soc a{width:30px;height:30px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-weight:700}
+@media(max-width:700px){.slide{flex-basis:70%}.slide.is-prev,.slide.is-next{display:none}.mbox{grid-template-columns:1fr}.arrow.l{left:0}.arrow.r{right:0}}
+/* hero: staircase title + background */
+.hero{position:relative;overflow:hidden;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='300' viewBox='0 0 360 300'%3E%3Cg transform='translate(20 150) rotate(-20) scale(0.7)' fill='%23fbc61a'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(150 20) rotate(25) scale(0.7)' fill='%23ffffff'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(260 90) rotate(-15) scale(0.65)' fill='%236b8fe8'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(60 30) rotate(15) scale(0.6)' fill='%23777'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(190 170) rotate(10) scale(0.7)' fill='%23fbc61a'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(300 220) rotate(-30) scale(0.6)' fill='%236b8fe8'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(90 230) rotate(-10) scale(0.65)' fill='%23ffffff'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3Cg transform='translate(330 10) rotate(20) scale(0.5)' fill='%23777'%3E%3Cellipse cx='32' cy='42' rx='14' ry='11'/%3E%3Cellipse cx='13' cy='28' rx='6' ry='8'/%3E%3Cellipse cx='25' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='39' cy='15' rx='6' ry='8'/%3E%3Cellipse cx='51' cy='28' rx='6' ry='8'/%3E%3C/g%3E%3C/svg%3E"),repeating-linear-gradient(0deg,transparent 0 38px,#cdd2de 38px 40px),repeating-linear-gradient(90deg,transparent 0 38px,#cdd2de 38px 40px),var(--bg)}
+.hero>*{position:relative;z-index:1}
+.hero::before,.hero::after{content:"ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ADOPT DON'T SHOP \00a0\00a0 ";position:absolute;left:-10%;width:120%;z-index:0;white-space:nowrap;overflow:hidden;background:#fde58a;color:#555;font:1.5rem Bangers;letter-spacing:.06em;padding:6px 0;box-shadow:0 2px 0 rgba(0,0,0,.15)}
+.hero::before{top:6em;transform:rotate(-4deg)}.hero::after{bottom:3em;transform:rotate(-3deg)}
+
+/* hero: everything is sized in em, and 1em = 1vw, so the whole intro scales as one piece
+   (browser zoom, resizing, maximize/minimize all look the same) */
+.hero{font-size:1vw;padding:max(110px,6em) 6em 3em;border-bottom:4px solid #000;display:flex;flex-direction:column}
+.hero::before,.hero::after{font-size:1.6em}
+.stair{margin:2em 0 0}
+.step{display:flex;align-items:flex-end;gap:1em}
+.s2{margin-left:5em}.s3{margin-left:10em}
+.w{font-family:Bangers,cursive;font-size:8em;line-height:.95;letter-spacing:.06em;color:#111;-webkit-text-stroke:.03em #fff;paint-order:stroke fill;text-shadow:.04em .04em 0 #8a8a8a}
+.w.role{color:var(--blue);-webkit-text-stroke:.03em #000;text-shadow:.03em .03em 0 #000;background:var(--yellow);padding:0 .12em;border:.05em solid #000;border-radius:.12em;transform:rotate(-4deg);box-shadow:.05em .05em 0 #000;margin-top:.05em}
+.step .tag{margin:0 0 .6em;font-size:1.15em;white-space:nowrap}
+.intro{display:flex;flex-wrap:nowrap;gap:1.5em;align-items:flex-end;margin-top:3em}
+.intro .card{flex:1 1 0;font-size:1.05em;padding:1.5em;border-radius:1.6em;box-shadow:.35em .4em 0 #000;text-align:justify}
+.intro .btn.big{font-size:2.2em;padding:.5em 1.2em;border-radius:.3em;box-shadow:.12em .12em 0 #000;white-space:nowrap}
+.narrow .card p,.three .card,.two p{text-align:justify}
+/* phones: still one scaled piece, just a bit bigger and stacked */
+@media(max-width:600px){
+  .hero{font-size:3.4vw;padding:100px 1.5em 2em}
+  .s2{margin-left:2.5em}.s3{margin-left:5em}
+  .step{flex-direction:column;align-items:flex-start;gap:0}.step .tag{white-space:normal;margin:0 0 1em}
+  .intro{flex-wrap:wrap}.intro .card{flex:1 1 100%}
+}
+</style></head><body>
+<nav class="nav"><a class="brand" href="index.html">🐾 PAWPATHROLE<small>PET ADOPTION SERVICES</small></a>
+<div class="links"><a href="#pets">Pets 🐾</a><a href="index.html">Home</a><a href="#advocacies">Community</a>
+<details class="acct"><summary>👤</summary><div><a href="#login.php">Login</a><a href="#">Create Account</a></div></details></div></nav>
+<header class="hero">
+  <div class="stair">
+    <div class="step s1"><span class="w">PAW</span><p class="tag">FIND YOUR FUTURE PAW FRIEND</p></div>
+    <div class="step s2"><span class="w">PATH</span><p class="tag">DISCOVER EVERY PET'S STORY</p></div>
+    <div class="step s3"><span class="w role">ROLE</span><p class="tag">ARE YOU READY TO BE A FURPARENT?</p></div>
+  </div><div class="intro"><div class="card"><i>PawPathRole is a pet adoption platform that helps connect animals in need with responsible and loving adopters. Our goal is to make pet adoption easier while promoting proper animal care and animal welfare.</i></div>
+  <div class="card"><i>Adopting a pet means committing to provide a safe home, proper care, food, medical attention, and love. Make sure you are ready for the time, responsibility, and needs that come with caring for an animal.</i></div>
+  <a class="btn big" href="#pets">🐾 ADOPT NOW!</a></div>
+</header>
+<section class="yellow" id="pets">
+  <article class="pet"><img src="milo.jpeg" alt="Milo" onerror="this.removeAttribute('src')">
+    <div class="card"><h2>MEET MILO!</h2><p>AGE: 2 years old<br>GENDER: Male</p><p><b>BACKGROUND STORY:</b><br>Milo was rescued and brought to the shelter after being found alone outdoors. He is a gentle and affectionate cat who is now looking for a safe and loving forever home.</p><a class="btn" href="#">VIEW MORE DETAILS</a></div></article>
+  <article class="pet flip"><img src="Koda.png" alt="Kodai" onerror="this.removeAttribute('src')">
+    <div class="card"><h2>MEET KODAI!</h2><p>AGE: 3 years old<br>GENDER: Male</p><p><b>BACKGROUND STORY:</b><br>Kodai was surrendered by a family unable to provide for proper care. He is a friendly and playful dog who enjoys being around people and is now looking for a loving furever home.</p><a class="btn" href="#">VIEW MORE DETAILS</a></div></article>
+</section>
+<section class="yellow narrow" id="about">
+  <div class="card"><h2>ABOUT US</h2><p>PawPathRole was created to provide a simpler and more organized way for people to discover animals that are looking for a home. It was developed in response to the need for an accessible platform where potential adopters can easily view available pets and learn about their background, personality, health, and specific care needs before applying for adoption.</p><p>The purpose of PawPathRole is to make the adoption experience easier and more informative for both adopters and animals. By providing detailed pet profiles, adoption information, and educational resources about responsible pet ownership, the platform helps users make informed decisions.</p></div>
+  <div class="card"><h2>MISSION &amp; GOALS:</h2><p>PawPathRole's mission is to make pet adoption easier, responsible, and accessible while helping animals find safe, caring, and suitable homes. We aim to provide potential adopters with reliable information about each animal before adopting.</p><p>Our goal is to promote responsible pet ownership, improve animal welfare, and encourage compassion toward animals in need. We also give animals with disabilities or special needs a better opportunity to find loving and suitable homes.</p></div>
+</section>
+<section class="yellow" id="advocacies"><h2 class="ctr">ADVOCACIES</h2><div class="three">
+  <div class="card">PawPathRole advocates for responsible pet adoption, animal welfare, and compassionate treatment of animals. We support giving shelter animals a second chance by connecting them with loving families.</div>
+  <div class="card">We speak for animals who can't, because every pet deserves love, safety, and a caring home. Stand against abuse, report cruelty, and be their voice for every paw in need.</div>
+  <div class="card">We also promote proper pet care, awareness of animal health and special needs, and responsible pet ownership to help create a safer and more caring community for animals.</div>
+</div></section>
+<section class="yellow two" id="policies"><div><h2>POLICIES</h2><p>PawPathRole is committed to maintaining a safe, responsible, and respectful adoption process. Users are expected to provide accurate information when creating an account and submitting an adoption application. Each user may only have one active or pending adoption application at a time. After successfully adopting a pet, a 30-day cooldown period is required before applying for another pet. Applications are subject to review, verification, and an interview before adoption approval. All users are also expected to respect the privacy of others, follow website guidelines, and provide proper care for adopted animals. <strong><br>Users may only maintain one active adoption application at a time.</strong></p></div>
+<div><h2>FAQ</h2><ul><li>How can I adopt a pet?<br><small>Create an account, open a pet's profile, and send an adoption request.</small></li></ul><ul><li>Can I apply for more than one pet?<br><small>No. Users can only have one active or pending adoption application at a time.</small></li></ul><ul><li>What happens after I submit my application?<br><small>The application will be reviewed by the administrator. If approved for the next step, you may be scheduled for an interview. You can monitor your application status through your account.</small></li></ul><ul><li>Can I adopt another pet after completing an adoption?<br><small>Yes. However, you must wait for the 30-day cooldown period after successfully adopting a pet before applying for another one.</small></li></ul><ul><li>Are pets with special needs available for adoption?<br><small>Yes. Their profiles provide information about their condition, medical history, and special care requirements so potential adopters can understand their needs before applying.</small></li></ul><ul><li>How will I know if my application has been updated?<br><small>You will receive notifications about important updates, including application status, interview schedules, approval or rejection, and other adoption-related announcements.</small></li></ul><ul><li>Can I change my application information?<br><small>For changes or corrections to submitted information, contact the PawPathRole administrators for assistance.</small></li></ul></div></section>
+<section class="yellow" id="stories" aria-label="Success stories"><h2 class="fbtitle">TESTIMONIALS</h2><div class="car" id="storyCar"><button class="arrow l" aria-label="Previous story"><svg viewBox="0 0 24 24"><path d="M16 3 6 12l10 9"/></svg></button><div class="track"><article class="slide"><img src="URBAN-LEGENDS.jpg" alt="Sussy&#x27;s Story" onerror="this.removeAttribute('src')"><div class="foot"><button class="btn" data-open="0">VIEW STORY</button></div></article><article class="slide"><img src="Buddy.jpg" alt="Buddy&#x27;s Story" onerror="this.removeAttribute('src')"><div class="foot"><button class="btn" data-open="1">VIEW STORY</button></div></article><article class="slide"><img src="Luna.jpg" alt="Luna&#x27;s Story" onerror="this.removeAttribute('src')"><div class="foot"><button class="btn" data-open="2">VIEW STORY</button></div></article></div><button class="arrow r" aria-label="Next story"><svg viewBox="0 0 24 24"><path d="m8 3 10 9-10 9"/></svg></button></div></section>
+<section class="yellow" id="feedbacks"><h2 class="fbtitle">FEEDBACKS</h2><div class="car fb" id="fbCar"><button class="arrow l" aria-label="Previous feedback"><svg viewBox="0 0 24 24"><path d="M16 3 6 12l10 9"/></svg></button><div class="track"><article class="slide card"><div class="who"><img src="assets/img/john.jpg" alt="" onerror="this.removeAttribute('src')">John Doe</div><div class="ago">1 day ago</div><div class="stars">★★★★★</div><p>“The adoption process was easy to understand, and I was able to find a pet that matched our family&#x27;s lifestyle.”</p></article><article class="slide card"><div class="who"><img src="assets/img/rene.jpg" alt="" onerror="this.removeAttribute('src')">Rene Baterbonia</div><div class="ago">5 days ago</div><div class="stars">★★★★★</div><p>“The pet profiles were detailed and honest, which helped me decide with confidence.”</p></article><article class="slide card"><div class="who"><img src="assets/img/maria.jpg" alt="" onerror="this.removeAttribute('src')">Maria Santos</div><div class="ago">2 weeks ago</div><div class="stars">★★★★☆</div><p>“Friendly team and a clear process from request to pickup.”</p></article></div><button class="arrow r" aria-label="Next feedback"><svg viewBox="0 0 24 24"><path d="m8 3 10 9-10 9"/></svg></button></div>
+<div class="ctr"><a class="btn big" href="#">HELP US IMPROVE</a><br><a class="more" href="#">VIEW MORE FEEDBACK</a></div></section>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle"><button class="arrow l" id="mPrev" aria-label="Previous story"><svg viewBox="0 0 24 24"><path d="M16 3 6 12l10 9"/></svg></button><div class="mbox"><button class="close" id="mClose" aria-label="Close">✕</button><img id="mImg" alt=""><div><h3 id="mTitle"></h3><div id="mBody"></div></div></div><button class="arrow r" id="mNext" aria-label="Next story"><svg viewBox="0 0 24 24"><path d="m8 3 10 9-10 9"/></svg></button></div>
+<script>const STORIES=[{"title": "Sussy's Story", "image": "URBAN-LEGENDS.jpg", "body": "On a rainy evening, a volunteer heard a tiny cry coming from behind a trash bin at the edge of a quiet street. Curled between the bin and the wall was an orange kitten, soaked and shivering, with eyes too big for his small face. He was thin, but he still wobbled forward and pressed his head into her hand. At the shelter, the staff named him Mango because of his bright coat. He spent his first weeks learning that food would always come, that blankets were warm, and that people could be gentle.\n\nMonths later, Jeffy walked into the shelter feeling a little lost herself, after a move to a new city and a job that left her tired. Among the cages, one orange cat kept watching her, and when she knelt down, he climbed onto her lap as if he had been waiting for him. \"It felt like we just fit,\" she said later. \"Like we were both looking for the same thing.\" She signed the adoption papers that afternoon. Today Mango sleeps by her window, and Jeffy comes home each day to someone who is glad to see him."}, {"title": "Buddy's Story", "image": "Buddy.jpg", "body": "Add this adopter's story here."}, {"title": "Luna's Story", "image": "Luna.jpg", "body": "Add this adopter's story here."}];
+function carousel(root, onChange){
+  const s=[...root.querySelectorAll('.slide')]; let i=0; const n=s.length;
+  function draw(){ s.forEach((el,k)=>{ el.className=el.className.replace(/ ?(is-prev|is-active|is-next)/g,'');
+    if(k===i) el.classList.add('is-active'); else if(k===(i+n-1)%n) el.classList.add('is-prev'); else if(k===(i+1)%n) el.classList.add('is-next'); });
+    s.forEach(el=>{ el.style.order=el.classList.contains('is-prev')?0:el.classList.contains('is-active')?1:2; }); onChange&&onChange(i); }
+  root.querySelector('.arrow.l').onclick=()=>{i=(i+n-1)%n;draw()};
+  root.querySelector('.arrow.r').onclick=()=>{i=(i+1)%n;draw()};
+  draw(); return {go:k=>{i=(k+n)%n;draw()}, get:()=>i};
+}
+const sc=carousel(document.getElementById('storyCar')); carousel(document.getElementById('fbCar'));
+const modal=document.getElementById('modal'); let cur=0;
+function show(k){ cur=(k+STORIES.length)%STORIES.length; const s=STORIES[cur];
+  document.getElementById('mTitle').textContent=s.title; const im=document.getElementById('mImg'); im.src=s.image; im.alt=s.title;
+  const b=document.getElementById('mBody'); b.replaceChildren(...s.body.split(/\n\n+/).map(t=>{const p=document.createElement('p');p.textContent=t;return p;})); sc.go(cur); }
+function open_(k){ show(k); modal.hidden=false; document.body.style.overflow='hidden'; document.getElementById('mClose').focus(); }
+function close_(){ modal.hidden=true; document.body.style.overflow=''; }
+document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>open_(+b.dataset.open));
+document.getElementById('mClose').onclick=close_; document.getElementById('mPrev').onclick=()=>show(cur-1); document.getElementById('mNext').onclick=()=>show(cur+1);
+modal.addEventListener('click',e=>{ if(e.target===modal) close_(); });
+document.addEventListener('keydown',e=>{ if(modal.hidden) return; if(e.key==='Escape') close_(); if(e.key==='ArrowLeft') show(cur-1); if(e.key==='ArrowRight') show(cur+1); });
+</script><footer>
+ <div><h4>CONTACT US</h4>Email: pawpathrole@gmail.com<br>Phone: 09123456789<div class="soc"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="TikTok">♪</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="X">𝕏</a></div></div>
+ <div><h4>ADOPT A PET</h4><a href="#pets">Dogs</a><a href="#pets">Cats</a><a href="#pets">Rabbit</a></div>
+ <div><h4>COMMUNITY</h4><a href="#">Animal Learning Hub</a><a href="#">Donate</a></div>
+ <div><h4>QUICK LINKS</h4><a href="#about">About Us</a><a href="#policies">FAQ</a><a href="#policies">Policies</a><a href="#stories">Testimonials</a><a href="#feedbacks">Feedbacks</a></div>
+</footer></body></html>
